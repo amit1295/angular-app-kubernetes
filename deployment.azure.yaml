@@ -19,15 +19,14 @@ spec:
         - containerPort: 80 
 --- 
 # https://kubernetes.io/docs/concepts/services-networking/service/#defining-a-service  
-kind: Service 
-apiVersion: v1 
-metadata: 
-  name: angular-service 
-spec: 
-    type: angular
+kind: Service
+apiVersion: v1
+metadata:
+  name: myangular-service
+spec:
   selector:
-    app: train-schedule
+    app: angular
   ports:
   - protocol: TCP
     port: 8080
-    nodePort: 8080
+  type: LoadBalancer

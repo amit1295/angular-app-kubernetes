@@ -18,15 +18,16 @@ spec:
         ports:
         - containerPort: 80
 ---
-# https://kubernetes.io/docs/concepts/services-networking/service/#defining-a-service
-kind: Service
-apiVersion: v1
-metadata:
-  name: mangular-service
-spec:
-  selector:
-    app: angular
-  ports:
-  - protocol: TCP
-    port: 8080
-  type: LoadBalancer
+# https://kubernetes.io/docs/concepts/services-networking/service/#defining-a-service  
+kind: Service 
+apiVersion: v1 
+metadata: 
+  name: angular-service 
+spec: 
+  selector: 
+    app: angular 
+  ports: 
+  - protocol: TCP 
+    port: 80 
+    targetPort: 80 
+  type: LoadBalancer 

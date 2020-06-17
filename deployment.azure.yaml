@@ -14,7 +14,7 @@ spec:
     spec: 
       containers: 
       - name: angular 
-        image: linuxacademycontent/train-schedule:autoscaling 
+        image: amibas/TheImage:$(Build.BuildId) 
         ports: 
         - containerPort: 80 
 --- 

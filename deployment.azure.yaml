@@ -1,33 +1,46 @@
-apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
+kind: Service
+apiVersion: v1
+metadata:
+  name: train-schedule-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: train-schedule
+  ports:
+  - protocol: TCP
+    port: 8080
+
+
+---
+
+apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: mangular-deployment
+  name: train-schedule-deployment
+  labels:
+    app: train-schedule
 spec:
+  replicas: 2
   selector:
     matchLabels:
-      app: angular
-  replicas: 1
+      app: train-schedule
   template:
     metadata:
       labels:
-        app: angular
+        app: train-schedule
     spec:
       containers:
-      - name: angular
-        image: amibas/theimage
+      - name: train-schedule
+        image: linuxacademycontent/train-schedule:autoscaling
         ports:
-        - containerPort: 80
----
-# https://kubernetes.io/docs/concepts/services-networking/service/#defining-a-service  
-kind: Service 
-apiVersion: v1 
-metadata: 
-  name: angular-service 
-spec: 
-  selector: 
-    app: angular 
-  ports: 
-  - protocol: TCP 
-    port: 80 
-    targetPort: 80 
-  type: LoadBalancer 
+        - containerPort: 8080
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 8080
+          initialDelaySeconds: 15
+          timeoutSeconds: 1
+          periodSeconds: 10
+        resources:
+          requests:
+            cpu: 150m

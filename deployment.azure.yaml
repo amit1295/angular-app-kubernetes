@@ -6,7 +6,7 @@ spec:
   selector: 
     matchLabels: 
       app: angular 
-  replicas: 5 # tells deployment to run 2 pods matching the template 
+  replicas: 1
   template:
     metadata: 
       labels: 
@@ -14,7 +14,7 @@ spec:
     spec: 
       containers: 
       - name: angular 
-        image: amibas/theimage:#{Build.BuildId}# 
+        image: linuxacademycontent/train-schedule:autoscaling 
         ports: 
         - containerPort: 80 
 --- 
